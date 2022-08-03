@@ -47,3 +47,20 @@ class PublicationRepository:
             Publication.rollback()
 
         return result
+
+    @staticmethod
+    def delete(id) -> dict:
+        result: dict = {
+            'success': False
+        }
+        try:
+            publication = Publication.query.filter_by(id=id).first()
+            publication.delete(publication)
+            result = {
+                'success': True,
+                'message': "Successfully Deleted"
+            }
+        except IntegrityError:
+            Publication.rollback()
+
+        return result

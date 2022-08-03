@@ -14,3 +14,8 @@ class BaseModel:
     @staticmethod
     def commit():
         db.session.commit()
+
+    @staticmethod
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()

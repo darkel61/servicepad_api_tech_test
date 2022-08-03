@@ -1,6 +1,6 @@
 from flask_restful import Api
-from resources import UserCreate, Login, Logout, CreatePublication, UpdatePublication
-# , DeletePublication, GetPublications
+from resources import UserCreate, Login, Logout, CreatePublication, UpdatePublication, DeletePublication
+# , GetPublications
 from models import User as UserModel, db
 from flask_migrate import Migrate
 from app import create_app
@@ -15,7 +15,7 @@ api.add_resource(Login, '/api/user/login')
 api.add_resource(Logout, '/api/user/logout')
 api.add_resource(CreatePublication, '/api/user/publication')
 api.add_resource(UpdatePublication, '/api/user/publication')
-# api.add_resource(DeletePublication, '/api/user/publication')
+api.add_resource(DeletePublication, '/api/user/publication')
 # api.add_resource(GetPublications, '/api/user/publication')
 # api.add_resource()
 

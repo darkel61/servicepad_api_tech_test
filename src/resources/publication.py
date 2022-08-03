@@ -33,7 +33,6 @@ class UpdatePublication(Resource):
         priority = request_json.get('priority', '')
         token = request_json.get('token', '')
 
-        print(request_json)
         user = SessionRepository.token_check(token)
 
         if not user:
@@ -41,6 +40,24 @@ class UpdatePublication(Resource):
 
         try:
             publication = PublicationRepository.update(id, title, description, priority)
+            return publication, 200
+        except Exception as e:
+            print(e)
+            return {"message": "Something went wrong"}, 400
+
+class DeletePublication(Resource):
+    def delete(self):
+        request_json = request.get_json(silent=True)
+        id = request_json.get('id', '')
+        token = request_json.get('token', '')
+
+        user = SessionRepository.token_check(token)
+
+        if not user:
+            return {"message": "Unauthorized"}, 403
+
+        try:
+            publication = PublicationRepository.delete(id)
             return publication, 200
         except Exception as e:
             print(e)
