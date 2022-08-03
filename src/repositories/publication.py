@@ -14,9 +14,36 @@ class PublicationRepository:
             result = {
                 'success': True,
                 'title': publication.title,
+                'publication_id': publication.id
             }
         except IntegrityError:
             Publication.rollback()
             # raise ResourceExists('user already exists')
+
+        return result
+
+    @staticmethod
+    def update(id, title, description, priority) -> dict:
+        result: dict = {
+            'success': False
+        }
+        try:
+            publication = Publication.query.filter_by(id=id).first()
+
+            if title:
+                publication.title = title
+            if description:
+                publication.description = description
+            if priority:
+                publication.priority = priority
+            publication.commit()
+
+            result = {
+                'success': True,
+                'title': publication.title,
+                'publication_id': publication.id
+            }
+        except IntegrityError:
+            Publication.rollback()
 
         return result

@@ -1,5 +1,5 @@
 from .user import UserCreate
 from .session import Login, Logout
-from .publication import CreatePublication
+from .publication import CreatePublication, UpdatePublication
 
-__all__ = ['UserCreate', 'Login', 'Logout', 'CreatePublication']
+__all__ = ['UserCreate', 'Login', 'Logout', 'CreatePublication', UpdatePublication]
