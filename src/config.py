@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 load_dotenv()
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
-from models import User
+from models import User, Publication
 
 POSTGRES_URL = os.environ.get('POSTGRES_URL')
 POSTGRES_USER = os.environ.get('POSTGRES_USER')
@@ -27,6 +27,7 @@ class Config(object):
         create_database(engine.url)
         
     User.metadata.create_all(engine)
+    Publication.metadata.create_all(engine)
 
     # Silence the deprecation warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -49,13 +50,6 @@ class ProductionConfig(Config):
 
 
 def get_config(env=None):
-    if env is None:
-        try:
-            env = get_env_variable('ENV')
-        except Exception:
-            env = 'development'
-            print('env is not set, using env:', env)
-
     if env == 'production':
         return ProductionConfig()
     elif env == 'test':
