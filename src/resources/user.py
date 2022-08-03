@@ -1,16 +1,7 @@
-from flask import request, jsonify
+from flask import request
 from flask_restful import Resource
 
 from repositories import UserRepository
-
-
-class User(Resource):
-    def get(self, username: str):
-        # TODO: error handler
-        # move to another resource
-        user = UserRepository.get(username)
-        return user, 200
-
 
 class UserCreate(Resource):
     def post(self):
@@ -24,7 +15,7 @@ class UserCreate(Resource):
         photo: str = request_json.get('photo', '')
         
         try:
-            user = UserRepository.create(email, password, fullname, photo,)
+            user = UserRepository.create(email, fullname, password, photo)
             return user, 200
         except Exception as e:
             print(e)

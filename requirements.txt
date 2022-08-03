@@ -4,3 +4,4 @@ flask_sqlalchemy
 flask_migrate
 python-dotenv
 Flask-Migrate
+sqlalchemy-utils

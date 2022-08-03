@@ -1,6 +1,9 @@
 import os
 from dotenv import load_dotenv
 load_dotenv()
+from sqlalchemy import create_engine
+from sqlalchemy_utils import database_exists, create_database
+from models import User
 
 POSTGRES_URL = os.environ.get('POSTGRES_URL')
 POSTGRES_USER = os.environ.get('POSTGRES_USER')
@@ -17,6 +20,13 @@ class Config(object):
         pw=POSTGRES_PASSWORD,
         url=POSTGRES_URL,
         db=POSTGRES_DB)
+
+
+    engine = create_engine(SQLALCHEMY_DATABASE_URI)
+    if not database_exists(engine.url):
+        create_database(engine.url)
+        
+    User.metadata.create_all(engine)
 
     # Silence the deprecation warning
     SQLALCHEMY_TRACK_MODIFICATIONS = False

@@ -1,4 +1,4 @@
-from .user import UserCreate, User
+from .user import UserCreate
+from .session import Login, Logout
 
-
-__all__ = ['UserCreate', 'User']
+__all__ = ['UserCreate', 'Login', 'Logout']
