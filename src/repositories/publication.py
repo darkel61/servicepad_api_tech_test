@@ -1,5 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 from models import Publication
+import json
 
 class PublicationRepository:
     @staticmethod
@@ -59,6 +60,37 @@ class PublicationRepository:
             result = {
                 'success': True,
                 'message': "Successfully Deleted"
+            }
+        except IntegrityError:
+            Publication.rollback()
+
+        return result
+
+    @staticmethod
+    def getAll(user_id) -> dict:
+        result: dict = {
+            'success': False
+        }
+        publications_array = []
+        try:
+            publications = Publication.query.filter_by(user_id=user_id).all()
+
+            for publication in publications:
+                publications_array.append({
+                    'id': publication.id,
+                    'title': publication.title,
+                    'description': publication.description,
+                    'priority': publication.priority,
+                    'status': publication.status,
+                    'user_id': publication.user_id,
+                    'created_at': str(publication.created_at),
+                    'updated_at': str(publication.updated_at),
+                    'published_at': str(publication.published_at)
+                })
+
+            result = {
+                'success': True,
+                'publications': publications_array
             }
         except IntegrityError:
             Publication.rollback()
